@@ -1,21 +1,26 @@
-const express= require('express');
-const app= express()
+const express=require('express');
+const app= express();
+const logger=require('./middleware')
 
-const {products}= require('./data')
-
-const newProducts=products.map((product)=>{
-    const {id,name,price}=product;
-    return {id,name,price}
-})
+app.use(logger)
 
 app.get('/',(req,res)=>{
-    res.json(newProducts)
+    res.status(200).send('Home Page')
 })
-app.get('/:Id',(req,res)=>{
-    console.log(req.params);
-    // const {id}=req.params.Id;
-    // console.log(id);
-    res.json(newProducts.find((product)=> product.id===1))
+app.get('/about',(req,res)=>{
+    res.status(200).send('About Page')
+})
+app.get('/api/a',(req,res)=>{
+    res.status(200).send('a')
+})
+app.get('/api/b',(req,res)=>{
+    res.status(200).send('b')
+})
+app.all('*',(req,res)=>{
+    res.status(404).send('Page Not Found')
 })
 
-app.listen(5000)
+
+app.listen(5000,()=>{
+    console.log('Server is running....');
+})

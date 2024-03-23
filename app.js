@@ -1,26 +1,17 @@
 const express=require('express');
-const app= express();
-const logger=require('./middleware')
+const app=express()
+const Authorized=require('./middleware')
 
-app.use(logger)
+app.use(Authorized)
 
 app.get('/',(req,res)=>{
-    res.status(200).send('Home Page')
+    res.send('Hello World')
 })
-app.get('/about',(req,res)=>{
-    res.status(200).send('About Page')
+app.get('/login',(req,res)=>{
+    res.send('Welcome Roshan')
+    console.log(req.user);
 })
-app.get('/api/a',(req,res)=>{
-    res.status(200).send('a')
-})
-app.get('/api/b',(req,res)=>{
-    res.status(200).send('b')
-})
-app.all('*',(req,res)=>{
-    res.status(404).send('Page Not Found')
-})
-
 
 app.listen(5000,()=>{
-    console.log('Server is running....');
+    console.log('Server is running')
 })

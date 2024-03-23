@@ -1,9 +1,12 @@
 const logger=(req,res,next)=>{
-    const method=req.method
-    const url=req.url
-    const year= new Date().getFullYear()
-    console.log(method,url,year);
-    next()
+    const{name}=req.query
+    if(name==='Roshan'){
+        req.user={name:`${name}`,id:1}
+        next()
+    }
+    else{
+        res.status(401).send('You are not roshan')
+    }
 }
 
 module.exports=logger

@@ -1,17 +1,21 @@
 const express=require('express');
-const app=express()
-const Authorized=require('./middleware')
+const app=express();
 
-app.use(Authorized)
+const router=require('./routes/people')
+const login=require('./routes/login')
 
-app.get('/',(req,res)=>{
-    res.send('Hello World')
-})
-app.get('/login',(req,res)=>{
-    res.send('Welcome Roshan')
-    console.log(req.user);
+app.use(express.static('./methods-public'))
+app.use(express.urlencoded());
+app.use(express.json())
+
+app.use('/api/people',router);
+app.use('/login',login);
+
+
+app.all('*',(req,res)=>{
+    res.status(404).send('Error')
 })
 
 app.listen(5000,()=>{
-    console.log('Server is running')
+    console.log('Server is running');
 })
